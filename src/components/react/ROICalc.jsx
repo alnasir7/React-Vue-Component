@@ -1,7 +1,7 @@
 import React from "react"
 
 
-const Demo2 = () =>  {
+const ROICalc = () =>  {
   
   const [fields, setFields] = React.useState ({
     col1: "",
@@ -11,9 +11,14 @@ const Demo2 = () =>  {
 
   const handleFieldChange = (e) => {
     const newFields = {...fields};
-    newFields[e.target.id] = e.target.value;
+    const value = e.target.id === "col2" ? e.target.value.replace("$", "") : e.target.value;
+    var reg = /^-?\d*\.?\d*$/;
+    if (value.match(reg)){
+    console.log(value);
+    newFields[e.target.id] = value;
     console.log(newFields);
     setFields(newFields);
+    }
   }
    
       return (
@@ -37,7 +42,7 @@ const Demo2 = () =>  {
        <h3 style={{fontSize:"24px", color:"#000000", fontWeight:"500"}}>
          1. How many employees do you have?
        </h3>
-       <input  value={fields.col1} type="text" placeholder="eg: 100" id="col1" style={{
+       <input  onChange={handleFieldChange}value={fields.col1} type="text" placeholder="eg: 100" id="col1" style={{
          color:"#878787",
          border:"1.5px solid #E3E3E3",
          borderRadius:"3px",
@@ -51,14 +56,15 @@ const Demo2 = () =>  {
        <h3 style={{fontSize:"24px", color:"#000000", fontWeight:"500"}}>
        2. What is the average hourly income of each employee?
        </h3>
-       <input value={fields.col2} onChange={handleFieldChange}
+       <input value={"$" + fields.col2} onChange={handleFieldChange}
        type="text" style={{
          color:"#878787",
          border:"1.5px solid #E3E3E3",
          borderRadius:"3px",
          padding:"10px",
          width:"160px",
-         fontSize:"24px"
+         fontSize:"24px",
+        
        }} name="" id="col2"/>
        <span style = {{color:"#7D7D7D", fontSize:"24px",margin : "0px 15px"}}>per hour</span>
        </div>
@@ -85,4 +91,4 @@ const Demo2 = () =>  {
     
   }
 
-  export default Demo2
+  export default ROICalc ;
